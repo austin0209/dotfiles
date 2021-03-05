@@ -23,3 +23,5 @@ setopt hist_verify            # show command with history expansion to user befo
 export NVIM_PATH=/home/austin/.config/nvim
 
 eval "$(starship init zsh)"
+alias ls="exa"
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
