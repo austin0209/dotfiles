@@ -7,7 +7,6 @@ set nu
 set nowrap
 set smartcase
 set noswapfile
-set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set foldmethod=indent "set to fold by indents
