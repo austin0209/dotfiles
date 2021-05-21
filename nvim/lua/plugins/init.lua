@@ -23,6 +23,19 @@ require("packer").startup(function()
 			{ "junegunn/fzf.vim" }
 		}
 	}
+    use {
+		"nvim-telescope/telescope.nvim",
+		requires = {
+			{ "nvim-lua/popup.nvim" },
+			{ "nvim-lua/plenary.nvim" },
+			{ "kyazdani42/nvim-web-devicons" },
+			{ "nvim-telescope/telescope-fzy-native.nvim" },
+		},
+		config = function()
+			require("plugins.telescope.settings")
+			require("plugins.telescope.mappings")
+		end
+	}
 
   -- QOL
 	use { "mbbill/undotree" }
@@ -33,6 +46,13 @@ require("packer").startup(function()
 	use { "tpope/vim-dispatch" }
 	use { "editorconfig/editorconfig-vim" }
 	use { "ii14/exrc.vim" }
+	use {
+		"folke/lsp-trouble.nvim",
+		config = function()
+			require("plugins.lsp-trouble.settings")
+			require("plugins.lsp-trouble.mappings")
+		end
+	}
 
   -- Interface
 	use {
@@ -71,7 +91,7 @@ require "plugins.nvim-tree.settings"
 
 require "plugins.lsp.mappings"
 require "plugins.nvim-compe.mappings"
-require "plugins.fzf.mappings"
+-- require "plugins.fzf.mappings"
 require "plugins.nvim-lspfuzzy.mappings"
 require "plugins.gitsigns.mappings"
 require "plugins.fterm.mappings"
