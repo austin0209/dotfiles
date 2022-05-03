@@ -48,16 +48,16 @@ require("packer").startup(function(use)
 	use("nvim-treesitter/nvim-treesitter-textobjects")
 	use("neovim/nvim-lspconfig") -- Collection of configurations for built-in LSP client
 	use("hrsh7th/nvim-cmp") -- Autocompletion plugin
+	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-nvim-lsp")
 	use("saadparwaiz1/cmp_luasnip")
 	use("L3MON4D3/LuaSnip") -- Snippets plugin
 	use("ellisonleao/gruvbox.nvim")
+	use("gpanders/editorconfig.nvim")
 end)
 
-require("Comment").setup()
-
 vim.o.termguicolors = true
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd([[colorscheme gruvbox]])
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>", "<nop>")
@@ -69,3 +69,53 @@ vim.keymap.set("x", "<C-_>", "<Plug>(comment_toggle_linewise_visual)")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
+require("indent_blankline").setup({
+	show_trailing_blankline_indent = false,
+})
+
+require("Comment").setup()
+
+require("gitsigns").setup()
+
+require("nvim-treesitter.configs").setup({
+	ensure_installed = "all",
+	highlight = {
+		enable = true,
+	},
+})
+
+-- Setup nvim-cmp.
+local cmp = require("cmp")
+
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })),
+		["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })),
+	}),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" }, -- For luasnip users.
+	}, {
+		{ name = "buffer" },
+	}),
+})
+
+-- Setup lspconfig.
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+require("lspconfig")["ccls"].setup({
+	capabilities = capabilities,
+})
