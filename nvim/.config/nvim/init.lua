@@ -61,7 +61,8 @@ vim.cmd([[colorscheme gruvbox]])
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>", "<nop>")
-vim.keymap.set("n", "<C-p>", "<cmd>Telescope<CR>")
+vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<CR>")
+vim.keymap.set("n", "<leader>p", "<cmd>Telescope lsp_document_symbols<CR>")
 vim.keymap.set("n", "<C-_>", "<Plug>(comment_toggle_current_linewise)")
 
 vim.keymap.set("x", "<C-_>", "<Plug>(comment_toggle_linewise_visual)")
