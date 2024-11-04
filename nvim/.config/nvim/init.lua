@@ -62,9 +62,22 @@ vim.keymap.set("v", ">", ">gv")
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
+  spec = {{
     -- add your plugins here
-  },
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    -- Add languages to be installed here that you want installed for treesitter
+    config = function ()
+      local configs = require("nvim-treesitter.configs")
+
+      configs.setup({
+        ensure_installed = {
+          'markdown', 'bash', 'html', 'css',
+          'clojure', 'java', 'python','lua'
+        },
+      })
+    end
+  }},
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "habamax" } },
