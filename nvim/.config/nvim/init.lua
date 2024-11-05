@@ -6,10 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" }, { out, "WarningMsg" }, { "\nPress any key to exit..." }, }, true, {})
     vim.fn.getchar()
     os.exit(1)
   end
@@ -41,6 +38,7 @@ vim.o.list = true
 vim.o.listchars = "tab:│ ,trail:¤"
 vim.o.colorcolumn = "80"
 vim.o.clipboard = "unnamedplus"
+vim.o.termguicolors = true
 
 vim.keymap.set("n", "<leader>", "<nop>")
 vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<CR>")
@@ -62,26 +60,46 @@ vim.keymap.set("v", ">", ">gv")
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {{
-    -- add your plugins here
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    -- Add languages to be installed here that you want installed for treesitter
-    config = function ()
-      local configs = require("nvim-treesitter.configs")
+  spec = {
+      {
+      "nvim-treesitter/nvim-treesitter",
+      build = ":TSUpdate",
+      -- Add languages to be installed here that you want installed for treesitter
+      config = function ()
+        local configs = require("nvim-treesitter.configs")
 
-      configs.setup({
-        ensure_installed = {
-          'markdown', 'bash', 'html', 'css',
-          'clojure', 'java', 'python','lua'
-        },
-      })
-    end
-  }},
+        configs.setup({
+          ensure_installed = {
+            'markdown', 'bash', 'html', 'css',
+            'clojure', 'java', 'python','lua'
+          },
+        })
+      end
+    },
+    "clojure-vim/clojure.vim",
+    "nvim-telescope/telescope.nvim",
+	"neovim/nvim-lspconfig",
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-nvim-lsp",
+	"ellisonleao/gruvbox.nvim"
+  },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
+
+require("nvim-treesitter.install").prefer_git = true
+
+require("nvim-treesitter.configs").setup({
+  ensure_installed = "all",
+  highlight = {
+    enable = true,
+  },
+})
+
+
+vim.cmd([[colorscheme gruvbox]])
 
