@@ -124,7 +124,14 @@ require("lazy").setup({
 		{ "neoclide/coc.nvim",       branch = "release" },
 		"sainnhe/everforest",
 		"navarasu/onedark.nvim",
-		{ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } }
+		{ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } },
+		"Olical/conjure",
+		"HiPhish/rainbow-delimiters.nvim",
+		"gpanders/nvim-parinfer",
+		-- The following were recommended plugins that I'm not sure I need.
+		--"tpope/vim-surround",
+		--"guns/vim-sexp",
+		--"tpope/vim-sexp-mappings-for-regular-people",
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
