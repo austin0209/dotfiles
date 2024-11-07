@@ -2,14 +2,15 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" }, { out, "WarningMsg" }, { "\nPress any key to exit..." }, }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" }, { out, "WarningMsg" }, { "\nPress any key to exit..." }, },
+			true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -64,71 +65,72 @@ vim.keymap.set("v", ">", ">gv")
 
 --- CoC stuff ---
 local keyset = vim.keymap.set
-local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
 keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 keyset("i", "<A-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 
 -- GoTo code navigation
-keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
-keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+keyset("n", "gd", "<Plug>(coc-definition)", { silent = true })
+keyset("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
+keyset("n", "gi", "<Plug>(coc-implementation)", { silent = true })
+keyset("n", "gr", "<Plug>(coc-references)", { silent = true })
 
 -- Use to show documentation in preview window
 function _G.show_docs()
-    local cw = vim.fn.expand('<cword>')
-    if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
-        vim.api.nvim_command('h ' .. cw)
-    elseif vim.api.nvim_eval('coc#rpc#ready()') then
-        vim.fn.CocActionAsync('doHover')
-    else
-        vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
-    end
+	local cw = vim.fn.expand('<cword>')
+	if vim.fn.index({ 'vim', 'help' }, vim.bo.filetype) >= 0 then
+		vim.api.nvim_command('h ' .. cw)
+	elseif vim.api.nvim_eval('coc#rpc#ready()') then
+		vim.fn.CocActionAsync('doHover')
+	else
+		vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+	end
 end
-keyset("n", "<C-q>", '<CMD>lua _G.show_docs()<CR>', {silent = true})
+
+keyset("n", "<C-q>", '<CMD>lua _G.show_docs()<CR>', { silent = true })
 
 -- Symbol renaming
-keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
+keyset("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
 
 -- Formatting selected code
-keyset("x", "<leader>f", "<Plug>(coc-format-selected)", {silent = true})
-keyset("n", "<leader>f", "<Plug>(coc-format-selected)", {silent = true})
+keyset("x", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
+keyset("n", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
 
 -- Add `:Format` command to format current buffer
 vim.api.nvim_create_user_command("Format", "call CocAction('format')", {})
 
 --- Setup lazy.nvim ---
 require("lazy").setup({
-  spec = {
-    {
-      "nvim-treesitter/nvim-treesitter",
-      build = ":TSUpdate",
-      -- Add languages to be installed here that you want installed for treesitter
-      config = function ()
-        local configs = require("nvim-treesitter.configs")
+	spec = {
+		{
+			"nvim-treesitter/nvim-treesitter",
+			build = ":TSUpdate",
+			-- Add languages to be installed here that you want installed for treesitter
+			config = function()
+				local configs = require("nvim-treesitter.configs")
 
-        configs.setup({
-          ensure_installed = {
-            'markdown', 'bash', 'html', 'css',
-            'clojure', 'java', 'python','lua'
-          },
-        })
-      end
-    },
-    "clojure-vim/clojure.vim",
-    "nvim-telescope/telescope.nvim",
-    "ellisonleao/gruvbox.nvim",
-    { "neoclide/coc.nvim", branch = "release" },
-    "sainnhe/everforest",
-	"navarasu/onedark.nvim",
-    { "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } }
-  },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+				configs.setup({
+					ensure_installed = {
+						'markdown', 'bash', 'html', 'css',
+						'clojure', 'java', 'python', 'lua'
+					},
+				})
+			end
+		},
+		"clojure-vim/clojure.vim",
+		"nvim-telescope/telescope.nvim",
+		"ellisonleao/gruvbox.nvim",
+		{ "neoclide/coc.nvim",       branch = "release" },
+		"sainnhe/everforest",
+		"navarasu/onedark.nvim",
+		{ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } }
+	},
+	-- Configure any other settings here. See the documentation for more details.
+	-- colorscheme that will be used when installing plugins.
+	install = { colorscheme = { "habamax" } },
+	-- automatically check for plugin updates
+	checker = { enabled = true },
 })
 
 require("nvim-treesitter.install").prefer_git = true
@@ -136,10 +138,10 @@ require("nvim-treesitter.install").prefer_git = true
 require("gitsigns").setup()
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
-  highlight = {
-    enable = true,
-  },
+	ensure_installed = "all",
+	highlight = {
+		enable = true,
+	},
 })
 
 
