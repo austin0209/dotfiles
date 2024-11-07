@@ -37,7 +37,7 @@ vim.o.mouse = "a"
 vim.o.autoread = true
 vim.o.list = true
 vim.o.listchars = "tab:│ ,trail:¤"
-vim.o.colorcolumn = "80"
+vim.o.colorcolumn = "120"
 vim.o.clipboard = "unnamedplus"
 vim.o.termguicolors = true
 
