@@ -128,6 +128,10 @@ require("lazy").setup({
 		"Olical/conjure",
 		"HiPhish/rainbow-delimiters.nvim",
 		"gpanders/nvim-parinfer",
+		"haishanh/night-owl.vim",
+		"tpope/vim-dispatch",
+		"radenling/vim-dispatch-neovim",
+		"clojure-vim/vim-jack-in",
 		-- The following were recommended plugins that I'm not sure I need.
 		--"tpope/vim-surround",
 		--"guns/vim-sexp",
@@ -153,5 +157,5 @@ require("nvim-treesitter.configs").setup({
 
 
 vim.o.background = "dark"
-vim.cmd([[colorscheme onedark]])
+vim.cmd([[colorscheme night-owl]])
 
