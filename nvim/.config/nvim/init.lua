@@ -157,5 +157,5 @@ require("nvim-treesitter.configs").setup({
 
 
 vim.o.background = "dark"
-vim.cmd([[colorscheme night-owl]])
+vim.cmd([[colorscheme gruvbox]])
 
