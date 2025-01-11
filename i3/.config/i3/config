@@ -211,4 +211,5 @@ bar {
 
 for_window [class="steam"] floating enable
 for_window [class="ulauncher"] floating enable
+for_window [class="MintUpdate.py"] floating enable
 
