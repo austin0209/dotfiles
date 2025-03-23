@@ -213,4 +213,9 @@ for_window [class="steam"] floating enable
 for_window [class="ulauncher"] floating enable
 for_window [class="MintUpdate.py"] floating enable
 for_window [window_role="pop-up"] floating enable
+for_window [class="com-atlauncher-App"] floating enable
+for_window [class="Gnome-screenshot"] floating enable
+
+# Possibly temporary
+for_window [instance="Kamps"] floating enable
 
