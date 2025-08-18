@@ -68,7 +68,7 @@ local keyset = vim.keymap.set
 local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
 keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
-keyset("i", "<A-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+keyset("n", "<A-CR>", "<Plug>(coc-codeaction-cursor")
 
 -- GoTo code navigation
 keyset("n", "gd", "<Plug>(coc-definition)", { silent = true })
@@ -115,6 +115,9 @@ require("lazy").setup({
 						'markdown', 'bash', 'html', 'css',
 						'clojure', 'java', 'python', 'lua'
 					},
+					highlight = {
+						enable = true,
+					},
 				})
 			end
 		},
@@ -147,14 +150,6 @@ require("lazy").setup({
 require("nvim-treesitter.install").prefer_git = true
 
 require("gitsigns").setup()
-
-require("nvim-treesitter.configs").setup({
-	ensure_installed = "all",
-	highlight = {
-		enable = true,
-	},
-})
-
 
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])

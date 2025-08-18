@@ -218,4 +218,5 @@ for_window [class="Gnome-screenshot"] floating enable
 
 # Possibly temporary
 for_window [instance="Kamps"] floating enable
+for_window [instance="Cardinal"] floating enable
 
